@@ -42,3 +42,25 @@ jobs:
       run: python src/contribute.py https://github.com/${{ github.repository }}
     - name: Make Script Executable
       run: chmod +x contribute.py
+  name: Build Linux
+
+  on: push
+   jobs:
+        build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set Up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install Dependencies
+      run: |
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Run Script
+      run: python contribute.py
